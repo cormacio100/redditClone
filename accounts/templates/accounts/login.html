@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if error %}
+        {{ error }}
+    {% endif %}
+    <h2>Login</h2>
+    <form action="{% url 'accounts:login' %}" method="POST">
+        {% csrf_token %}
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% endif %}
+        <label for="username">Username:</label><br>
+        <input type="text" name="username" id="username" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" name="password" id="password" required><br>
+        <input type="submit" value="Login">
+    </form>
+{% endblock %}
