@@ -40,11 +40,20 @@ def home(request):
     return render(request, 'posts/home.html', args)
 
 
+#   challenge answer - VERSION 1
 def created_by(request, author_id):
     user = User.objects.get(pk=author_id)
-    posts = Post.objects.filter(author=user)
-    return render(request, 'posts/created_by.html', {'posts': posts})
+    posts = Post.objects.filter(author=user).order_by('-votes_total')
+    args = {'author': user.first_name + ' ' + user.last_name,
+            'posts': posts}
+    return render(request, 'posts/created_by.html', args)
 
+
+#   challenge answer - VERSION 2
+#   author ID is a foreign key to Posts
+def created_by2(request,fk):
+    posts = Post.objects.filter(author__id=fk).order_by('-votes_total')
+    return render(request, 'posts/home.html', {'posts':posts})
 
 def upvote(request, pk):
     if request.method == 'POST':
