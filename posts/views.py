@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Post
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -39,6 +40,12 @@ def home(request):
     return render(request, 'posts/home.html', args)
 
 
+def created_by(request, author_id):
+    user = User.objects.get(pk=author_id)
+    posts = Post.objects.filter(author=user)
+    return render(request, 'posts/created_by.html', {'posts': posts})
+
+
 def upvote(request, pk):
     if request.method == 'POST':
         post = Post.objects.get(pk=pk)
@@ -53,3 +60,6 @@ def downvote(request, pk):
         post.votes_total -= 1
         post.save()
         return redirect('home')
+
+
+
