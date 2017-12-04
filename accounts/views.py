@@ -42,7 +42,7 @@ def login_view(request):
                 if request.POST['next'] is not None:    # NOT NECESSARY
                     return redirect(request.POST['next'])
             args = {'error': 'Logged in successfully'}
-            return render(request, 'accounts/login.html', args)
+            return redirect('home')
         else:
             args = {'error': 'User not found'}
             return render(request, 'accounts/login.html', args)
