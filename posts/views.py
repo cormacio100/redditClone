@@ -34,7 +34,7 @@ def create(request):
 #   RETURN LIST OF ALL POSTS
 def home(request):
     #   retrieve all Posts objects
-    posts = Post.objects.order_by('title')
+    posts = Post.objects.order_by('-votes_total')
     args = {'posts':posts}
     return render(request, 'posts/home.html', args)
 
